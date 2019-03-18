@@ -1,4 +1,4 @@
-// declare three global variables
+
 
 // Create an array of words
 var WORDS = [
