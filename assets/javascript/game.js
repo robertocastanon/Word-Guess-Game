@@ -1,5 +1,3 @@
-
-
 // Create an array of words
 var WORDS = [
     "rat",
@@ -33,7 +31,7 @@ function init(){
   if (guess.length !== 1) {
       showThisMessage ="Please enter only a single letter";
   } else {
-        // Update the game with player guess
+        // update the game with player guess
         var i=0;
         for (i = 0; i < word.length; i++) {
             if (word[i] === guess) {
@@ -65,3 +63,19 @@ function init(){
   }
   document.getElementById("message").innerHTML = showThisMessage;
 }
+
+    //button to give answer 
+function giveUp() {
+    document.getElementById("message").innerHTML = "The word was "+word;
+    for (var j = 0; j < word.length; j++) {
+        answerArray[j] = word[j];
+    }
+    // Solve the puzzle
+    document.getElementById("answer").innerHTML = answerArray.join(" ");
+}
+
+    // simple button to reload page
+function reload() {
+    location.reload();
+}
+

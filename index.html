@@ -12,14 +12,20 @@
 <script src="assets/javascript/game.js"></script>
 
 <h1>Hangman!</h1>
+
+<div class="container-fluid">
+    
 Type a letter (then press guess)
 <input id="guess" type="text">
 <input type="button" value="guess" onClick="guessOne()"/>
-<input type="button" value="reset" onClick="quit()"/>
+<input type="button" value="give up" onClick="giveUp()"/>
+<input type="button" value="reload" onClick="reload()"/>
 <p id="message">&nbsp;</p>
 <p>
 <span id="answer">puzzle loads here</span>
 </p>
+
+</div>
 
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
