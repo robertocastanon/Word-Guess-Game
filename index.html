@@ -1,36 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <title>JOJO Hangman!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="assets/javascript/game.js" type="text/javascript"></script>
 </head>
+
 <body>
-<script src="assets/javascript/game.js"></script>
+        <div class="container">
+            <img id="title-image" src="assets/images/hangman-title.png" alt="Hangman Title Image" />
+            <div class="row">
+                <div class="col-md-6 gameplay-column">
+                    <img id="youwin-image" src="assets/images/you-win.png" alt="Winning Image" />
+                    <img id="gameover-image" src="assets/images/gameover.png" alt="Game Over Image" />
+                    <h2 id="pressKeyTryAgain">Press Any Key to Try Again!</h2>
 
-<h1>Hangman!</h1>
-
-<div class="container-fluid">
+                </div>
+                <div class="col-md-6 gameplay-column">
+                    <h2>Press Any Key to Get Started!</h2>
+                    <h4>Wins</h4>
+                    <h5 id="totalWins"></h5>
+                    <h4>Current Word</h4>
+                    <h3 id="currentWord"></h3>
+                    <h4>Guesses Remaining</h4>
+                    <h6 id="remainingGuesses"></h6>
+                    <h4>Letters Guessed</h4>
+                    <h3 id="guessedLetters"></h3>
+                </div>
+            </div>
+        </div>
     
-Type a letter (then press guess)
-<input id="guess" type="text">
-<input type="button" value="guess" onClick="guessOne()"/>
-<input type="button" value="give up" onClick="giveUp()"/>
-<input type="button" value="reload" onClick="reload()"/>
-<p id="message">&nbsp;</p>
-<p>
-<span id="answer">puzzle loads here</span>
-</p>
-
-</div>
-
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-</body>
-</html>
+        <script>
+            resetGame();
+            updateDisplay();
+        </script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+            crossorigin="anonymous"></script>
+    </body>
+    

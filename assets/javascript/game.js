@@ -1,81 +1,116 @@
-// Create an array of words
-var WORDS = [
-    "rat",
-    "pig",
-    "cat",
-    "dog"
-];
+var selectableWords =
+    [
+        "josuke",
+        "jotaro",
+        "koichi",
+        "okuyasu",
+        "rohan",
+        "tomoko",
+        "joseph",
+        "kira",
+        "reimi",
+        "hayato",
+        "kosaku",
+        "shigekiyo",
+    ];
 
-var word="";
+const maxTries = 10;
 
-var answerArray = [];
+var guessedLetters = [];
+var currentWordIndex;
+var guessingWord = [];
+var remainingGuesses = 0;
+var gameStarted = false;
+var hasFinished = false;
+var wins = 0;
 
-function init(){
-    // This will pick a random word
-    word = WORDS[Math.floor(Math.random() * WORDS.length)];
-    // setting up the answer array
-    answerArray = [];
-    for (var i = 0; i < word.length; i++) {
-      answerArray[i] = "_";
+function resetGame() {
+    remainingGuesses = maxTries;
+    gameStarted = false;
+
+    currentWordIndex = Math.floor(Math.random() * (selectableWords.length));
+
+    guessedLetters = [];
+    guessingWord = [];
+
+    for (var i = 0; i < selectableWords[currentWordIndex].length; i++) {
+        guessingWord.push("_");
     }
-    document.getElementById("answer").innerHTML= answerArray.join(" ");
-    document.getElementById("message").innerHTML= "Type a letter then press guess, or press quit to stop playing."
-  }
-  init();
+    document.getElementById("pressKeyTryAgain").style.cssText= "display: none";
+    document.getElementById("gameover-image").style.cssText = "display: none";
+    document.getElementById("youwin-image").style.cssText = "display: none";
 
-  function guessOne() {
-    // player guesses
-    var guess = document.getElementById("guess").value;
-    var showThisMessage = "";
+    updateDisplay();
+};
 
-  if (guess.length !== 1) {
-      showThisMessage ="Please enter only a single letter";
-  } else {
-        // update the game with player guess
-        var i=0;
-        for (i = 0; i < word.length; i++) {
-            if (word[i] === guess) {
-                answerArray[i] = guess;
-                showThisMessage = "YES! "+guess+" is in the answer";
-            }
-        }
+function updateDisplay() {
 
-        var remaining_letters = answerArray.length;
-
-        for (i = 0; i < answerArray.length; i++) {
-            if (answerArray[i] !== '_') {
-                remaining_letters -= 1;
-            }
-        }
-
-        if (remaining_letters == 0) {
-            showThisMessage = "YES! You guessed the word";
-        }
-
-        if (showThisMessage === "") {
-            showThisMessage = "Sorry, no "+guess;
-        }
-
-        document.getElementById("answer").innerHTML = answerArray.join(" ");
-
-        // clears out their last guess
-        document.getElementById("guess").value = "";
-  }
-  document.getElementById("message").innerHTML = showThisMessage;
-}
-
-    //button to give answer 
-function giveUp() {
-    document.getElementById("message").innerHTML = "The word was "+word;
-    for (var j = 0; j < word.length; j++) {
-        answerArray[j] = word[j];
+    document.getElementById("totalWins").innerText = wins;
+    document.getElementById("currentWord").innerText = "";
+    for (var i = 0; i < guessingWord.length; i++) {
+        document.getElementById("currentWord").innerText += guessingWord[i];
     }
-    // Solve the puzzle
-    document.getElementById("answer").innerHTML = answerArray.join(" ");
-}
+    document.getElementById("remainingGuesses").innerText = remainingGuesses;
+    document.getElementById("guessedLetters").innerText = guessedLetters;
+    if(remainingGuesses <= 0) {
+        document.getElementById("gameover-image").style.cssText = "display: block";
+        document.getElementById("pressKeyTryAgain").style.cssText = "display:block";
+        hasFinished = true;
+    }
+};
 
-    // simple button to reload page
-function reload() {
-    location.reload();
-}
+document.onkeydown = function(event) {
+    if(hasFinished) {
+        resetGame();
+        hasFinished = false;
+    } else {
+        if(event.keyCode >= 65 && event.keyCode <= 90) {
+            makeGuess(event.key.toLowerCase());
+        }
+    }
+};
 
+function makeGuess(letter) {
+    if (remainingGuesses > 0) {
+        if (!gameStarted) {
+            gameStarted = true;
+        }
+
+        if (guessedLetters.indexOf(letter) === -1) {
+            guessedLetters.push(letter);
+            evaluateGuess(letter);
+        }
+    }
+    
+    updateDisplay();
+    checkWin();
+};
+
+function evaluateGuess(letter) {
+    var positions = [];
+
+    for (var i = 0; i < selectableWords[currentWordIndex].length; i++) {
+        if(selectableWords[currentWordIndex][i] === letter) {
+            positions.push(i);
+        }
+    }
+
+    // remove guess if no indicies
+    if (positions.length <= 0) {
+        remainingGuesses--;
+    } else {
+        // replace _ with letters
+        for(var i = 0; i < positions.length; i++) {
+            guessingWord[positions[i]] = letter;
+        }
+    }
+};
+
+function checkWin() {
+    if(guessingWord.indexOf("_") === -1) {
+        document.getElementById("youwin-image").style.cssText = "display: block";
+        document.getElementById("pressKeyTryAgain").style.cssText= "display: block";
+        wins++;
+        hasFinished = true;
+    }
+};
